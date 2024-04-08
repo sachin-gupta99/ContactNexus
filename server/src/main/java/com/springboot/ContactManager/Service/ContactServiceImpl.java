@@ -1,6 +1,5 @@
 package com.springboot.ContactManager.Service;
 
-import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
