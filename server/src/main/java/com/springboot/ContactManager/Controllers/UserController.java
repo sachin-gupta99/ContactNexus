@@ -108,7 +108,6 @@ public class UserController {
         try {
 
             User user = userService.findUserById(id);
-            user.setId(id);
             if (user == null) {
                 ErrorClass error = createError("User Not Found!", "User with id " + id + " does not exist");
                 return ResponseEntity.status(404).body(error);
