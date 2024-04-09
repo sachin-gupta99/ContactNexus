@@ -22,21 +22,27 @@ body {
 
 .link::after {
   content: "";
-  display: block;
+  position: absolute;
+  left: 50%; 
+  bottom: -1.3rem;
+  transform: translateX(-50%); 
   width: 0;
   height: 4px;
   border-radius: 20rem;
   background: #c53007;
-  transition: width 0.3s;
+  transition: width 0.3s, transform 0.3s;
   background: linear-gradient(90deg, #af472a, #f08e81);
 }
 
 .link:hover::after {
   width: 100%;
+  transform: translateX(-50%) scaleX(1.2); 
 }
 
 .active::after {
-  width: 100%;
+  width: 100%; 
+  transform: translateX(-50%) scaleX(1.2);
 }
+
 
 @tailwind utilities;

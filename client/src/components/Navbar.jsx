@@ -31,7 +31,7 @@ const Navbar = () => {
         <img
           src="https://via.placeholder.com/150"
           alt="User Avatar"
-          className="rounded-full w-12 h-12"
+          className="rounded-full w-10 h-10"
         />
       </div>
     </div>
