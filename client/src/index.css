@@ -23,9 +23,9 @@ body {
 .link::after {
   content: "";
   position: absolute;
-  left: 50%; 
+  left: 50%;
   bottom: -1.3rem;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   width: 0;
   height: 4px;
   border-radius: 20rem;
@@ -36,13 +36,16 @@ body {
 
 .link:hover::after {
   width: 100%;
-  transform: translateX(-50%) scaleX(1.2); 
-}
-
-.active::after {
-  width: 100%; 
   transform: translateX(-50%) scaleX(1.2);
 }
 
+.active::after {
+  width: 100%;
+  transform: translateX(-50%) scaleX(1.2);
+}
 
 @tailwind utilities;
+
+.w-max-content {
+  width: max-content;
+}

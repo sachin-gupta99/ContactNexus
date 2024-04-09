@@ -2,6 +2,11 @@ import React from "react";
 import logo from "../assets/logo.png";
 import Navlink from "./Navlink";
 import { NavLink } from "react-router-dom";
+import { IoHome } from "react-icons/io5";
+import { IoPerson } from "react-icons/io5";
+import { IoMdContacts } from "react-icons/io";
+import { IoMdSettings } from "react-icons/io";
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
   return (
@@ -13,26 +18,26 @@ const Navbar = () => {
       </div>
       <div className="w-2/5 font-bold">
         <ul className="flex gap-10 justify-center text-red-700">
-          <li>
+          <li className="flex items-center gap-2">
+            <IoHome />
             <Navlink href="/home">Home</Navlink>
           </li>
-          <li>
+          <li className="flex items-center gap-2">
+            <IoPerson />
             <Navlink href="/profile">Profile</Navlink>
           </li>
-          <li>
+          <li className="flex items-center gap-2">
+            <IoMdContacts />
             <Navlink href="/contacts">Contacts</Navlink>
           </li>
-          <li>
+          <li className="flex items-center gap-2">
+            <IoMdSettings />
             <Navlink href="/settings">Settings</Navlink>
           </li>
         </ul>
       </div>
       <div className="w-1/9">
-        <img
-          src="https://via.placeholder.com/150"
-          alt="User Avatar"
-          className="rounded-full w-10 h-10"
-        />
+        <Dropdown />
       </div>
     </div>
   );
