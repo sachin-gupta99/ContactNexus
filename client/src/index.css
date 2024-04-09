@@ -10,10 +10,33 @@
 
 body {
   font-family: "Nanum Gothic", sans-serif;
+  background-color: #f7f7f7;
 }
 
 @tailwind components;
 
+.link {
+  position: relative;
+  display: inline-block;
+}
 
+.link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 4px;
+  border-radius: 20rem;
+  background: #c53007;
+  transition: width 0.3s;
+  background: linear-gradient(90deg, #af472a, #f08e81);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.active::after {
+  width: 100%;
+}
 
 @tailwind utilities;
