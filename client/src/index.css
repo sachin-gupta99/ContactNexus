@@ -44,6 +44,17 @@ body {
   transform: translateX(-50%) scaleX(1.2);
 }
 
+.dropdown-items:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 4px;
+  background-color: red; /* Adjust the color as needed */
+  border-radius: 0 2px 2px 0; /* Adjust the border radius as needed */
+}
+
 @tailwind utilities;
 
 .w-max-content {
