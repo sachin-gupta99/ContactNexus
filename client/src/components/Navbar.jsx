@@ -45,21 +45,19 @@ const Navbar = () => {
             <Navlink href="/home">Home</Navlink>
           </li>
           <li className="flex items-center gap-2">
-            <IoPerson />
-            <Navlink href="/profile">Profile</Navlink>
-          </li>
-          <li className="flex items-center gap-2">
             <IoMdContacts />
             <Navlink href="/contacts">Contacts</Navlink>
           </li>
-          <li className="flex items-center gap-2">
-            <IoMdSettings />
-            <Navlink href="/settings">Settings</Navlink>
-          </li>
         </ul>
       </div>
-      <div className="w-1/9 relative" ref={dropdownRef}>
-        <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
+
+      <div className="flex justify-center gap-8 items-center w-1/8">
+        <button className="border-2 border-red-400 px-4 py-1 rounded-md bg-red-400 text-white font-bold shadow shadow-red-400 hover:shadow-md hover:shadow-red-200">
+          Login
+        </button>
+        <div className="w-1/9 relative" ref={dropdownRef}>
+          <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
+        </div>
       </div>
     </div>
   );

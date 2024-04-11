@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { IoPerson } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
+import { FaAddressCard } from "react-icons/fa";
 
-const Dropdown = ({isOpen, toggleDropdown}) => {
-
+const Dropdown = ({ isOpen, toggleDropdown }) => {
   return (
     <div className="relative">
       <img
@@ -19,6 +19,11 @@ const Dropdown = ({isOpen, toggleDropdown}) => {
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2 relative dropdown-items">
               <IoPerson />
               Profile
+            </li>
+            <hr />
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2 relative dropdown-items">
+              <FaAddressCard />
+              Contact Card
             </li>
             <hr />
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2 relative dropdown-items">
