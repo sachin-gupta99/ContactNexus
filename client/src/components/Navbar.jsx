@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useState } from "react";
 import logo from "../assets/logo.png";
 import Navlink from "./Navlink";
 import { NavLink } from "react-router-dom";
@@ -9,6 +10,27 @@ import { IoMdSettings } from "react-icons/io";
 import Dropdown from "./Dropdown";
 
 const Navbar = () => {
+  const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex justify-between items-center p-3 bg-gray-200 shadow-lg bg-opacity-40">
       <div className="w-1/8 hover:drop-shadow-md cursor-pointer">
@@ -36,8 +58,8 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <div className="w-1/9">
-        <Dropdown />
+      <div className="w-1/9 relative" ref={dropdownRef}>
+        <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
       </div>
     </div>
   );
