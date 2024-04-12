@@ -4,6 +4,8 @@ import MeetingDifferentPeople from "../assets/MeetingDifferentPeople.jpg";
 import SaveContacts from "../assets/SaveContacts.jpg";
 import ShareContact from "../assets/ShareContact.jpg";
 import { FaArrowRight } from "react-icons/fa";
+import { Button } from "flowbite-react";
+import { Card } from "flowbite-react";
 
 const Home = () => {
   return (
@@ -28,19 +30,19 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center">
-        <div className="flex flex-col items-center gap-4 border-r-2 px-8">
+        <div className="flex flex-col items-center gap-4 border-r-2 border-red-500 px-8">
           <span className="text-3xl font-bold text-red-500">1M+</span>
           <span className="text-xl font-bold text-gray-500">
             Contacts shared
           </span>
         </div>
-        <div className="flex flex-col items-center gap-4 border-r-2 px-8">
+        <div className="flex flex-col items-center gap-4 border-r-2 border-red-500 px-8">
           <span className="text-3xl font-bold text-red-500">95%</span>
           <span className="text-xl font-bold text-gray-500">
             User Satisfaction
           </span>
         </div>
-        <div className="flex flex-col items-center gap-4 border-r-2 px-8">
+        <div className="flex flex-col items-center gap-4 px-8">
           <span className="text-3xl font-bold text-red-500">10k</span>
           <span className="text-xl font-bold text-gray-500">Active Users</span>
         </div>
@@ -52,16 +54,12 @@ const Home = () => {
         <PortalReachSpecifics />
 
         <div className="flex justify-center mt-12 gap-4">
-          <button className="bg-red-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl flex items-center gap-2">
-            Get Started - It's Free <FaArrowRight />
-          </button>
+          <Button gradientMonochrome="failure" className="font-bold">
+            <div className="flex items-center gap-2 text-md">
+              Get Started - It's Free <FaArrowRight />
+            </div>
+          </Button>
         </div>
-      </div>
-
-      <div className="flex justify-center bg-red-500 text-white p-4">
-        <p className="text-center">
-          © {new Date().getFullYear()} Contact Nexus. All rights reserved.
-        </p>
       </div>
     </div>
   );
@@ -99,21 +97,18 @@ const StandardProcedure = () => {
 
 const StandardProcedureCards = ({ feature, description, featureImage }) => {
   return (
-    <div className="flex flex-col items-center gap-6 rounded-lg border-2 border-red-400 shadow-md shadow-red-300 w-1/3 overflow-hidden">
-      <div className="bg-red-400 text-white font-bold text-xl py-4 w-full text-center">
+    <Card
+      className="max-w-sm"
+      imgAlt="Meaningful alt text for an image that is not purely decorative"
+      imgSrc={featureImage}
+    >
+      <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
         {feature}
-      </div>
-      <div className="p-3 flex flex-col items-center gap-4">
-        <div className="w-40 h-40 rounded-full overflow-hidden">
-          <img
-            src={featureImage}
-            alt="Feature"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <p className="text-base text-red-600 text-center">{description}</p>
-      </div>
-    </div>
+      </h5>
+      <p className="font-normal text-gray-700 dark:text-gray-400">
+        {description}
+      </p>
+    </Card>
   );
 };
 
@@ -146,9 +141,13 @@ const PortalReachSpecifics = () => {
 
 const PortalReachSpecificsCard = ({ title, description }) => {
   return (
-    <div className="flex flex-col gap-4 rounded-lg border-2 border-red-400 shadow-md shadow-red-300 w-1/3 p-4">
-      <h1 className="text-2xl font-bold text-red-500">{title}</h1>
-      <p className="text-lg text-gray-500">{description}</p>
-    </div>
+    <Card className="max-w-sm">
+      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {title}
+      </h5>
+      <p className="font-normal text-gray-700 dark:text-gray-400">
+        {description}
+      </p>
+    </Card>
   );
 };
