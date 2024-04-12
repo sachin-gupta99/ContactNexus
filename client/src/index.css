@@ -10,7 +10,7 @@
 
 body {
   font-family: "Nanum Gothic", sans-serif;
-  background-color: #f7f7f7;
+  background-color: #ffecec;
 }
 
 @tailwind components;
@@ -31,7 +31,8 @@ body {
   border-radius: 20rem;
   background: #c53007;
   transition: width 0.3s, transform 0.3s;
-  background: linear-gradient(90deg, #af472a, #f08e81);
+  /* background: linear-gradient(90deg, #af472a, #f08e81); */
+  /* background: linear-gradient(90deg, #ffecec, #f08e81); */
 }
 
 .link:hover::after {
