@@ -70,10 +70,14 @@ export default Home;
 const StandardProcedure = () => {
   return (
     <div className="mt-12 m-4">
-      <h1 className="text-4xl font-bold text-center mb-8 text-red-500">
-        Standard Procedure
-      </h1>
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-4xl font-bold text-red-500">Standard Procedure</h1>
+        <p className="text-xl text-gray-500 text-center mb-7">
+          The standard procedure to use Contact Nexus is as follows.
+        </p>
+      </div>
 
+      
       <div className="flex justify-center gap-8 w-4/5 mx-auto">
         <StandardProcedureCards
           feature="Meet with different people"

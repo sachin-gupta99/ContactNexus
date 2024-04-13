@@ -52,8 +52,8 @@ body {
   left: 0;
   height: 100%;
   width: 4px;
-  background-color: red; /* Adjust the color as needed */
-  border-radius: 0 2px 2px 0; /* Adjust the border radius as needed */
+  background-color: red; 
+  border-radius: 0 2px 2px 0;
 }
 
 @tailwind utilities;
