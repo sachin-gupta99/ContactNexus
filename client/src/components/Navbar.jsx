@@ -31,7 +31,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="flex justify-between items-center p-3 bg-gray-900 shadow-lg sticky top-0">
+    <div className="flex justify-between items-center p-3 bg-gray-900 shadow-lg sticky top-0 z-50">
       <div className="w-1/8 hover:drop-shadow-md cursor-pointer">
         <NavLink to="/home">
           <img src={logo} alt="Logo" className="w-50 h-10" />
