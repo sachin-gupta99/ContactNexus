@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import Navlink from "./Navlink";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { IoMdContacts } from "react-icons/io";
 import Dropdown from "./Dropdown";
@@ -51,9 +51,11 @@ const Navbar = () => {
       </div>
 
       <div className="flex justify-center gap-8 items-center w-1/8">
-        <Button gradientMonochrome="failure" className="font-bold">
-          Login
-        </Button>
+        <Link to="/auth?mode=signin" className="text-white font-bold">
+          <Button gradientMonochrome="failure" className="font-bold">
+            Login
+          </Button>
+        </Link>
         <div className="w-1/9 relative" ref={dropdownRef}>
           <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
         </div>
