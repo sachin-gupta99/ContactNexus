@@ -21,12 +21,21 @@ const ImagePicker = ({ label, name }) => {
     };
     reader.readAsDataURL(file);
   };
+
   return (
     <div>
-      <label htmlFor={name} className="font-bold">{label}</label>
+      <label htmlFor={name} className="font-bold">
+        {label}
+      </label>
       <div className="flex items-center gap-[1.5rem] mb-[1rem]">
         <div className="w-[10rem] h-[10rem] border-2 border-gray-500 rounded-lg flex justify-center items-center text-center text-gray-900 relative">
-          {image && <img src={image} alt="Preview" className="w-full h-full object-cover" />}
+          {image && (
+            <img
+              src={image}
+              alt="Preview"
+              className="w-full h-full object-cover"
+            />
+          )}
           {!image && <p className="m-0 p-[1rem]">No image picked yet.</p>}
         </div>
         <input
