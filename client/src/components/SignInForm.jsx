@@ -13,11 +13,10 @@ const SignInForm = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white p-8 rounded shadow-lg w-96">
         <div className="flex flex-col gap-4">
-          <img src={logo_red} alt="Logo" />
+          <img src={logo_red} alt="Logo" width={200} className="self-center" />
 
-          <h1 className="text-3xl font-bold text-center text-gray-500">
-            Sign In
-          </h1>
+          <h1 className="text-xl font-bold text-center text-gray-500">Sign In</h1>
+            
         </div>
         <form className="mt-6">
           <TextField
