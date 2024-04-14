@@ -29,6 +29,10 @@ const Contacts = () => {
     console.log(currentPage);
   }, [currentPage]);
 
+  useEffect(() => {
+    document.title = "Contacts - Contact Nexus";
+  }, []);
+
   return (
     <div className="m-4 h-screen">
       <div className="flex justify-end items-center">
