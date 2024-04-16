@@ -20,9 +20,10 @@ const Auth = () => {
   return (
     <div>
       <div
-        className={`h-screen bg-black bg-cover opacity-80 relative`}
+        className={`h-screen bg-cover relative`}
         style={{ backgroundImage: `url(${background})` }}
       />
+      <div className="absolute top-0 left-0 w-full h-full bg-black/50" />
       <div className="w-[50%] mx-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {mode === "signin" && <SignInForm />}
         {mode === "signup" && <SignUpForm />}

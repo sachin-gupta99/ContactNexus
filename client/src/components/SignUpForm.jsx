@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { HiMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -23,7 +23,38 @@ import { BsPersonBadgeFill } from "react-icons/bs";
 import { TbFileDescription } from "react-icons/tb";
 
 const SignUpForm = () => {
+  const email_ref = useRef();
+  const name_ref = useRef();
+  const password_ref = useRef();
+  const confirmPassword_ref = useRef();
+  const work_ref = useRef();
+  const phone_ref = useRef();
+
+  const validate_form1 = () => {
+    const email = email_ref.current?.value;
+    const name = name_ref.current?.value;
+    const password = password_ref.current?.value;
+    const confirmPassword = confirmPassword_ref.current?.value;
+    const work = work_ref.current?.value;
+    const phone = phone_ref.current?.value;
+
+    if (!email || !name || !password || !confirmPassword || !work || !phone) {
+      console.log(email, name, password, confirmPassword, work, phone);
+      alert("Please fill all the fields.");
+      return false;
+    } else if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return false;
+    }
+
+    return true;
+  };
+
   const Form1Next = () => {
+    // if (!validate_form1()) {
+    //   return;
+    // }
+
     const form1 = document.getElementById("form1");
     const form2 = document.getElementById("form2");
 
