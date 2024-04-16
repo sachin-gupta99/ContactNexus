@@ -34,7 +34,7 @@ const Contacts = () => {
   }, []);
 
   return (
-    <div className="m-4 h-screen">
+    <div className="m-4">
       <div className="flex justify-end items-center">
         <div className="flex justify-between w-3/5">
           <h1 className="text-2xl text-red-400 p-4 text-center font-bold">

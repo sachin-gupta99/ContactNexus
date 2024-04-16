@@ -23,9 +23,13 @@ const RootLayout = () => {
   } else {
     return (
       <>
-        <Navbar />
-        <Outlet />
-        <FooterLayout />
+        <div className="min-h-screen">
+          <Navbar />
+          <Outlet />
+        </div>
+        <div>
+          <FooterLayout />
+        </div>
       </>
     );
   }
