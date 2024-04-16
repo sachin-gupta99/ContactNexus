@@ -21,14 +21,29 @@ import { MdInterests } from "react-icons/md";
 import ImagePicker from "./ImagePicker";
 import { BsPersonBadgeFill } from "react-icons/bs";
 import { TbFileDescription } from "react-icons/tb";
+import { newUserRoute } from "../api/userApi";
 
-const SignUpForm = () => {
+const SignUpForm = ({ setToast }) => {
   const email_ref = useRef();
   const name_ref = useRef();
   const password_ref = useRef();
   const confirmPassword_ref = useRef();
   const work_ref = useRef();
   const phone_ref = useRef();
+  const street_ref = useRef();
+  const area_ref = useRef();
+  const city_ref = useRef();
+  const country_ref = useRef();
+  const pincode_ref = useRef();
+  const github_ref = useRef();
+  const linkedin_ref = useRef();
+  const instagram_ref = useRef();
+  const likes_ref = useRef();
+  const movie_ref = useRef();
+  const interests_ref = useRef();
+  const image_ref = useRef();
+  const bio_heading_ref = useRef();
+  const bio_ref = useRef();
 
   const validate_form1 = () => {
     const email = email_ref.current?.value;
@@ -39,21 +54,55 @@ const SignUpForm = () => {
     const phone = phone_ref.current?.value;
 
     if (!email || !name || !password || !confirmPassword || !work || !phone) {
-      console.log(email, name, password, confirmPassword, work, phone);
-      alert("Please fill all the fields.");
-      return false;
+      return "Please fill all the fields.";
+    } else if (!email.includes("@")) {
+      return "Invalid email address.";
+    } else if (password.length < 8) {
+      return "Password must be at least 8 characters long.";
     } else if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return false;
+      return "Passwords do not match.";
     }
+    return "";
+  };
 
-    return true;
+  const validate_form2 = () => {
+    const street = street_ref.current?.value;
+    const area = area_ref.current?.value;
+    const city = city_ref.current?.value;
+    const country = country_ref.current?.value;
+    const pincode = pincode_ref.current?.value;
+
+    if (!street || !area || !city || !country || !pincode) {
+      return "Please fill all the fields.";
+    } else if (pincode.length !== 6) {
+      return "Invalid pincode.";
+    } else {
+      return "";
+    }
+  };
+
+  const validate_form3 = () => {
+    const github = github_ref.current?.value;
+    const linkedin = linkedin_ref.current?.value;
+    const instagram = instagram_ref.current?.value;
+    const likes = likes_ref.current?.value;
+    const movie = movie_ref.current?.value;
+    const interests = interests_ref.current?.value;
+
+    if (!github || !linkedin || !instagram || !likes || !movie || !interests) {
+      return "Please fill all the fields.";
+    } else {
+      return "";
+    }
   };
 
   const Form1Next = () => {
-    // if (!validate_form1()) {
-    //   return;
-    // }
+    const error = validate_form1();
+
+    if (error) {
+      setToast(error);
+      return;
+    }
 
     const form1 = document.getElementById("form1");
     const form2 = document.getElementById("form2");
@@ -79,6 +128,13 @@ const SignUpForm = () => {
   };
 
   const Form2Next = () => {
+    const error = validate_form2();
+
+    if (error) {
+      setToast(error);
+      return;
+    }
+
     const form2 = document.getElementById("form2");
     const form3 = document.getElementById("form3");
 
@@ -103,6 +159,13 @@ const SignUpForm = () => {
   };
 
   const Form3Next = () => {
+    const error = validate_form3();
+
+    if (error) {
+      setToast(error);
+      return;
+    }
+
     const form3 = document.getElementById("form3");
     const form4 = document.getElementById("form4");
     const heading = document.getElementById("form-heading");
@@ -125,6 +188,65 @@ const SignUpForm = () => {
     heading.innerHTML = "Social Media, Likes & Interests <hr />";
   };
 
+  const handleSubmmit = async (e) => {
+    e.preventDefault();
+    const email = email_ref.current?.value;
+    const name = name_ref.current?.value;
+    const password = password_ref.current?.value;
+    const work = work_ref.current?.value;
+    const phone = phone_ref.current?.value;
+
+    const street = street_ref.current?.value;
+    const area = area_ref.current?.value;
+    const city = city_ref.current?.value;
+    const country = country_ref.current?.value;
+    const pincode = pincode_ref.current?.value;
+
+    const github = github_ref.current?.value;
+    const linkedin = linkedin_ref.current?.value;
+    const instagram = instagram_ref.current?.value;
+    const likes = likes_ref.current?.value;
+    const movie = movie_ref.current?.value;
+    const interests = interests_ref.current?.value;
+
+    const image = image_ref.current?.files[0];
+    const bio_heading = bio_heading_ref.current?.value;
+    const bio = bio_ref.current?.value;
+
+    const form = new FormData();
+
+    form.append("email", email);
+    form.append("name", name);
+    form.append("password", password);
+    form.append("work", work);
+    form.append("phone", phone);
+    form.append("street", street);
+    form.append("area", area);
+    form.append("city", city);
+    form.append("country", country);
+
+    form.append("pincode", pincode);
+    form.append("github", github);
+
+    form.append("linkedin", linkedin);
+    form.append("instagram", instagram);
+    form.append("likes", likes);
+    form.append("movie", movie);
+    form.append("interests", interests);
+    form.append("image", image);
+    form.append("bio_heading", bio_heading);
+    form.append("bio", bio);
+
+    const result = await newUserRoute(form);
+
+    if (result.error) {
+      setToast(result.error);
+      return;
+    }
+
+    setToast("User created successfully.");
+  };
+
   return (
     <div className="bg-white p-8 rounded shadow-lg m-4">
       <div className="flex flex-col gap-2 justify-center">
@@ -138,7 +260,7 @@ const SignUpForm = () => {
           Personal Details <hr />
         </h1>
       </div>
-      <form className="mt-4">
+      <form className="mt-4" onSubmit={handleSubmmit}>
         {/* Form 1 */}
         <div className="" id="form1">
           <div className="flex gap-4">
@@ -146,6 +268,7 @@ const SignUpForm = () => {
               name="username"
               label="Email"
               placeholder="johndoe@gmail.com"
+              ref={email_ref}
               icon={HiMail}
               className="w-1/2"
             />
@@ -153,6 +276,7 @@ const SignUpForm = () => {
               name="name"
               label="Name"
               placeholder="John Doe"
+              ref={name_ref}
               icon={IoIosPerson}
               className="w-1/2"
             />
@@ -161,6 +285,8 @@ const SignUpForm = () => {
             <TextField
               name="password"
               label="Password"
+              type="password"
+              ref={password_ref}
               placeholder="Strong password"
               icon={RiLockPasswordFill}
               className="w-1/2"
@@ -168,6 +294,8 @@ const SignUpForm = () => {
             <TextField
               name="confirmPassword"
               label="Confirm Password"
+              type="password"
+              ref={confirmPassword_ref}
               placeholder="Strong password"
               icon={RiLockPasswordFill}
               className="w-1/2"
@@ -178,6 +306,7 @@ const SignUpForm = () => {
               name="work"
               label="Work"
               placeholder="Student, Software Engineer, etc."
+              ref={work_ref}
               icon={IoIosPerson}
               className="w-1/2"
             />
@@ -185,6 +314,7 @@ const SignUpForm = () => {
               name="phone"
               label="Phone"
               placeholder="1234567890"
+              ref={phone_ref}
               icon={FaPhoneAlt}
               className="w-1/2"
             />
@@ -211,6 +341,7 @@ const SignUpForm = () => {
               name="street-name"
               label="House/Flat No., Street Name"
               placeholder="Address Line 1"
+              ref={street_ref}
               icon={FaStreetView}
               className="w-full"
             />
@@ -220,6 +351,7 @@ const SignUpForm = () => {
               name="area"
               label="Area"
               placeholder="Area"
+              ref={area_ref}
               icon={TiChartArea}
               className="w-1/2"
             />
@@ -227,6 +359,7 @@ const SignUpForm = () => {
               name="city"
               label="City"
               placeholder="City"
+              ref={city_ref}
               icon={FaCity}
               className="w-1/2"
             />
@@ -236,6 +369,7 @@ const SignUpForm = () => {
               name="country"
               label="Country"
               placeholder="Country"
+              ref={country_ref}
               icon={BiWorld}
               className="w-1/2"
             />
@@ -243,6 +377,7 @@ const SignUpForm = () => {
               name="pincode"
               label="Pincode"
               placeholder="123456"
+              ref={pincode_ref}
               icon={TbMapPinCode}
               className="w-1/2"
             />
@@ -280,6 +415,7 @@ const SignUpForm = () => {
               name="github_profile"
               label="Github Profile ID"
               placeholder="hardy-coder99"
+              ref={github_ref}
               icon={FaGithub}
               className="w-1/3"
             />
@@ -287,6 +423,7 @@ const SignUpForm = () => {
               name="linkedin_profile"
               label="LinkedIn Profile ID"
               placeholder="hardy-influencer99"
+              ref={linkedin_ref}
               icon={FaLinkedin}
               className="w-1/3"
             />
@@ -294,6 +431,7 @@ const SignUpForm = () => {
               name="instagram_profile"
               label="Instagram Profile ID"
               placeholder="hardy-fashionista99"
+              ref={instagram_ref}
               icon={FaInstagramSquare}
               className="w-1/3"
             />
@@ -303,6 +441,7 @@ const SignUpForm = () => {
               name="likes"
               label="Likes"
               placeholder="Coding, Sleeping, etc."
+              ref={likes_ref}
               icon={FaCity}
               className="w-1/2"
             />
@@ -310,6 +449,7 @@ const SignUpForm = () => {
               name="movie"
               label="Movie"
               placeholder="The Shawshank Redemption"
+              ref={movie_ref}
               icon={MdMovie}
               className="w-1/2"
             />
@@ -319,6 +459,7 @@ const SignUpForm = () => {
               name="interests"
               label="Interests"
               placeholder="Web Development, Machine Learning, etc."
+              ref={interests_ref}
               icon={MdInterests}
               className="w-full"
             />
@@ -352,13 +493,14 @@ const SignUpForm = () => {
 
         {/* Form 4 */}
         <div className="hidden transition-all duration-300" id="form4">
-          <ImagePicker label="Profile Picture" name="image" />
+          <ImagePicker label="Profile Picture" name="image" ref={image_ref} />
 
           <div className="flex gap-4">
             <TextField
               name="bio_heading"
               label="Bio Heading"
               placeholder="Heading to be displayed for bio"
+              ref={bio_heading_ref}
               icon={BsPersonBadgeFill}
               className="w-full"
             />
@@ -369,6 +511,7 @@ const SignUpForm = () => {
               name="bio"
               label="Bio Description"
               placeholder="A short bio about yourself"
+              ref={bio_ref}
               icon={TbFileDescription}
               className="w-full"
             />
