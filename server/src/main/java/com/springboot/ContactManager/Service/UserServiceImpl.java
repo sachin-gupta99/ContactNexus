@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = theUserRepository;
     }
 
-
     @Override
     @Transactional
     public User saveUser(User user) {
@@ -31,9 +30,23 @@ public class UserServiceImpl implements UserService {
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
         newUser.setPhone(user.getPhone());
-        newUser.setImage(user.getImage());
         newUser.setPassword(user.getPassword());
-        newUser.setContacts(user.getContacts());
+
+        newUser.setAddress(user.getAddress());
+        newUser.setCity(user.getCity());
+        newUser.setState(user.getState());
+        newUser.setPincode(user.getPincode());
+
+        newUser.setGithub(user.getGithub());
+        newUser.setLinkedin(user.getLinkedin());
+        newUser.setInstagram(user.getInstagram());
+        newUser.setLikes(user.getLikes());
+        newUser.setMovie(user.getMovie());
+        newUser.setInterests(user.getInterests());
+
+        newUser.setImage(user.getImage());
+        newUser.setBio_heading(user.getBio_heading());
+        newUser.setBio_desc(user.getBio_desc());
 
         userRepository.save(newUser);
         return newUser;

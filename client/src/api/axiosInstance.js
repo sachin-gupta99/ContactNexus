@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuthToken } from "../utils/helper";
+import { getAuthToken } from "../util/helper";
 
 export const host = "http://localhost:8081";
 

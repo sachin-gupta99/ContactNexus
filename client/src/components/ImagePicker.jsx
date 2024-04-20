@@ -1,11 +1,10 @@
-import React from "react";
-import { useRef, useState } from "react";
+import React, { forwardRef } from "react";
+import { useState } from "react";
 
-const ImagePicker = ({ label, name }) => {
-  const ImageRef = useRef();
+const ImagePicker = forwardRef(({ label, name }, ref) => {
   const [image, setImage] = useState(null);
   const handlePickClick = (event) => {
-    ImageRef.current.click();
+    ref.current?.click();
   };
 
   const handleImageChange = (event) => {
@@ -44,7 +43,7 @@ const ImagePicker = ({ label, name }) => {
           id={name}
           accept="image/png image/jpeg image/jpg"
           name={name}
-          ref={ImageRef}
+          ref={ref}
           onChange={handleImageChange}
         />
         <button
@@ -57,6 +56,6 @@ const ImagePicker = ({ label, name }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ImagePicker;

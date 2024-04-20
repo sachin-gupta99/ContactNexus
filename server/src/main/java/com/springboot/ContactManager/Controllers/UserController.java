@@ -1,13 +1,18 @@
 package com.springboot.ContactManager.Controllers;
 
+import com.amazonaws.HttpMethod;
 import com.springboot.ContactManager.Entity.Contact;
 import com.springboot.ContactManager.Entity.User;
-import com.springboot.ContactManager.dto.ErrorClass;
+import com.springboot.ContactManager.Service.FileService;
 import com.springboot.ContactManager.Service.UserService;
+import com.springboot.ContactManager.dto.ErrorClass;
+import com.springboot.ContactManager.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +22,12 @@ public class UserController {
 
     private UserService userService;
 
+    private FileService fileService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FileService fileUploadService) {
         this.userService = userService;
+        this.fileService = fileUploadService;
     }
 
     @GetMapping
@@ -58,24 +66,24 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addUser(@RequestBody User user) {
+    public ResponseEntity addUser(@ModelAttribute UserDTO userDTO, @RequestParam("image") MultipartFile image) throws IOException {
 
-        try {
-            ErrorClass error = validateUser(user);
-
-            if (error != null) {
-                return ResponseEntity.status(400).body(error);
-            }
-
-            User savedUser = userService.saveUser(user);
-
-            return ResponseEntity.ok().body(savedUser);
-        } catch (Exception e) {
-            System.out.println(e);
-            ErrorClass error = createError("Internal Server Error!", e.getMessage());
-
-            return ResponseEntity.status(500).body(error);
+        if (userDTO.getName() == null || userDTO.getEmail() == null || userDTO.getPhone() == null || image == null) {
+            return ResponseEntity.status(400).body("Please provide all the details!");
         }
+
+        if(userService.findByEmail(userDTO.getEmail()) != null || userService.findByPhone(userDTO.getPhone()) != null) {
+            return ResponseEntity.status(400).body("Email or Phone number already exists!");
+        }
+
+        String imageURL = fileService.uploadImagetoS3(userDTO.getEmail(), image, "profile");
+
+        User user = userDTO.toUser(imageURL);
+
+        User savedUser = userService.saveUser(user);
+
+        return ResponseEntity.ok().body(savedUser);
+
     }
 
     private ErrorClass validateUser(User user) {
@@ -155,5 +163,10 @@ public class UserController {
             return ResponseEntity.status(500).body(error);
 
         }
+    }
+
+    @GetMapping("/geturl")
+    public ResponseEntity getURL(@RequestParam("key") String key) {
+        return ResponseEntity.ok().body(fileService.generateUrl(key, HttpMethod.GET));
     }
 }

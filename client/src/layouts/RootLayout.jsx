@@ -19,7 +19,11 @@ const RootLayout = () => {
     path === "/auth?mode=signup" ||
     path === "/auth"
   ) {
-    return <Outlet />;
+    return (
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
+    );
   } else {
     return (
       <>
