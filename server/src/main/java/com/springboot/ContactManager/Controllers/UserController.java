@@ -82,7 +82,7 @@ public class UserController {
 
         User savedUser = userService.saveUser(user);
 
-        return ResponseEntity.ok().body(savedUser);
+        return ResponseEntity.ok().body("User added successfully!");
 
     }
 
