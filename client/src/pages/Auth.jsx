@@ -5,8 +5,9 @@ import SignInForm from "../components/SignInForm";
 import SignUpForm from "../components/SignUpForm";
 import { router } from "../App";
 import axios from "axios";
-import { HiExclamation } from "react-icons/hi";
+import { HiCheck, HiExclamation } from "react-icons/hi";
 import { Toast } from "flowbite-react";
+import { getBackgroundRoute } from "../api/generalApi";
 
 const Auth = () => {
   const [params] = useSearchParams();
@@ -17,10 +18,17 @@ const Auth = () => {
 
   const [error, setError] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("error");
 
-  const setToast = (message) => {
+  const setToast = (message, type) => {
     setError(true);
     setToastMessage(message);
+
+    if (type === "error") {
+      setToastType("error");
+    } else if (type === "success") {
+      setToastType("success");
+    }
   };
 
   useEffect(() => {
@@ -41,13 +49,8 @@ const Auth = () => {
 
   useEffect(() => {
     const func = async () => {
-      const result = await axios.get("https://api.unsplash.com/photos/random", {
-        params: {
-          client_id: "sQqjtnQeEie7RuCcWwvN6RZzv2WzRb3m6Aeb8yrhaqs",
-          query: "nature,water",
-        },
-      });
-      setBackground(result.data.urls.full);
+      const background = await getBackgroundRoute();
+      setBackground(background.data.urls.full);
     };
 
     func();
@@ -67,10 +70,18 @@ const Auth = () => {
       />
       <div className="absolute top-0 left-0 w-full h-full bg-black/50" />
       {error && (
-        <Toast className="absolute bottom-2 right-2 transition-all duration-200">
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-            <HiExclamation className="h-5 w-5" />
-          </div>
+        <Toast className="absolute bottom-2 right-2 transition-all duration-200 z-50">
+          {toastType === "success" && (
+            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-700 dark:text-green-200">
+              <HiCheck className="h-5 w-5" />
+            </div>
+          )}
+
+          {toastType === "error" && (
+            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
+              <HiExclamation className="h-5 w-5" />
+            </div>
+          )}
           <div className="ml-3 text-sm font-normal">{toastMessage}</div>
           <Toast.Toggle />
         </Toast>

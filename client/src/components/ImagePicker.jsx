@@ -4,7 +4,7 @@ import { useState } from "react";
 const ImagePicker = forwardRef(({ label, name }, ref) => {
   const [image, setImage] = useState(null);
   const handlePickClick = (event) => {
-    ImageRef.current.click();
+    ref.current?.click();
   };
 
   const handleImageChange = (event) => {

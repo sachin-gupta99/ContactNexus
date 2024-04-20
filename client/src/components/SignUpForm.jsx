@@ -33,7 +33,7 @@ const SignUpForm = ({ setToast }) => {
   const street_ref = useRef();
   const area_ref = useRef();
   const city_ref = useRef();
-  const country_ref = useRef();
+  const state_ref = useRef();
   const pincode_ref = useRef();
   const github_ref = useRef();
   const linkedin_ref = useRef();
@@ -43,7 +43,7 @@ const SignUpForm = ({ setToast }) => {
   const interests_ref = useRef();
   const image_ref = useRef();
   const bio_heading_ref = useRef();
-  const bio_ref = useRef();
+  const bio_desc_ref = useRef();
 
   const validate_form1 = () => {
     const email = email_ref.current?.value;
@@ -69,10 +69,10 @@ const SignUpForm = ({ setToast }) => {
     const street = street_ref.current?.value;
     const area = area_ref.current?.value;
     const city = city_ref.current?.value;
-    const country = country_ref.current?.value;
+    const state = state_ref.current?.value;
     const pincode = pincode_ref.current?.value;
 
-    if (!street || !area || !city || !country || !pincode) {
+    if (!street || !area || !city || !state || !pincode) {
       return "Please fill all the fields.";
     } else if (pincode.length !== 6) {
       return "Invalid pincode.";
@@ -100,7 +100,7 @@ const SignUpForm = ({ setToast }) => {
     const error = validate_form1();
 
     if (error) {
-      setToast(error);
+      setToast(error, "error");
       return;
     }
 
@@ -131,7 +131,7 @@ const SignUpForm = ({ setToast }) => {
     const error = validate_form2();
 
     if (error) {
-      setToast(error);
+      setToast(error, "error");
       return;
     }
 
@@ -162,7 +162,7 @@ const SignUpForm = ({ setToast }) => {
     const error = validate_form3();
 
     if (error) {
-      setToast(error);
+      setToast(error, "error");
       return;
     }
 
@@ -199,7 +199,7 @@ const SignUpForm = ({ setToast }) => {
     const street = street_ref.current?.value;
     const area = area_ref.current?.value;
     const city = city_ref.current?.value;
-    const country = country_ref.current?.value;
+    const state = state_ref.current?.value;
     const pincode = pincode_ref.current?.value;
 
     const github = github_ref.current?.value;
@@ -211,40 +211,42 @@ const SignUpForm = ({ setToast }) => {
 
     const image = image_ref.current?.files[0];
     const bio_heading = bio_heading_ref.current?.value;
-    const bio = bio_ref.current?.value;
+    const bio_desc = bio_desc_ref.current?.value;
 
-    const form = new FormData();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("work", work);
+    formData.append("phone", phone);
 
-    form.append("email", email);
-    form.append("name", name);
-    form.append("password", password);
-    form.append("work", work);
-    form.append("phone", phone);
-    form.append("street", street);
-    form.append("area", area);
-    form.append("city", city);
-    form.append("country", country);
+    formData.append("street", street);
+    formData.append("area", area);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("pincode", pincode);
 
-    form.append("pincode", pincode);
-    form.append("github", github);
+    formData.append("github", github);
+    formData.append("linkedin", linkedin);
+    formData.append("instagram", instagram);
+    formData.append("likes", likes);
+    formData.append("movie", movie);
+    formData.append("interests", interests);
 
-    form.append("linkedin", linkedin);
-    form.append("instagram", instagram);
-    form.append("likes", likes);
-    form.append("movie", movie);
-    form.append("interests", interests);
-    form.append("image", image);
-    form.append("bio_heading", bio_heading);
-    form.append("bio", bio);
+    formData.append("image", image);
+    formData.append("bio_heading", bio_heading);
+    formData.append("bio_desc", bio_desc);
 
-    const result = await newUserRoute(form);
+    const result = await newUserRoute(formData);
+
+    console.log("Result: ", result);
 
     if (result.error) {
-      setToast(result.error);
+      setToast(result.error, "error");
       return;
     }
 
-    setToast("User created successfully.");
+    setToast("User created successfully.", "success");
   };
 
   return (
@@ -366,10 +368,10 @@ const SignUpForm = ({ setToast }) => {
           </div>
           <div className="flex gap-4">
             <TextField
-              name="country"
-              label="Country"
-              placeholder="Country"
-              ref={country_ref}
+              name="state"
+              label="State"
+              placeholder="State"
+              ref={state_ref}
               icon={BiWorld}
               className="w-1/2"
             />
@@ -511,7 +513,7 @@ const SignUpForm = ({ setToast }) => {
               name="bio"
               label="Bio Description"
               placeholder="A short bio about yourself"
-              ref={bio_ref}
+              ref={bio_desc_ref}
               icon={TbFileDescription}
               className="w-full"
             />

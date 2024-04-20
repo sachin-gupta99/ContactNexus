@@ -5,5 +5,9 @@ export const getUserRoute = () => {
 };
 
 export const newUserRoute = (data) => {
-  return axiosInstance.post("/api/user/add", data);
+  return axiosInstance.post("/api/user/add", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
