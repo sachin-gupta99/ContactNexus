@@ -1,6 +1,8 @@
 package com.springboot.ContactManager.Service;
 
 import com.springboot.ContactManager.Entity.User;
+import com.springboot.ContactManager.dto.ErrorClassDTO;
+import com.springboot.ContactManager.dto.SignInUserDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
