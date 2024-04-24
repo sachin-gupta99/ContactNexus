@@ -2,7 +2,7 @@ package com.springboot.ContactManager.Controllers;
 
 import com.springboot.ContactManager.Entity.Contact;
 import com.springboot.ContactManager.Service.ContactService;
-import com.springboot.ContactManager.dto.ErrorClass;
+import com.springboot.ContactManager.dto.ErrorClassDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,19 +27,19 @@ public class ContactController {
             Contact contact = contactService.getContactById(id);
 
             if (contact == null) {
-                ErrorClass error = createError("Contact not found!", "Contact with id = " + id + " not found!");
+                ErrorClassDTO error = createError("Contact not found!", "Contact with id = " + id + " not found!");
                 return ResponseEntity.status(404).body(error);
             }
 
             return ResponseEntity.ok().body(contact);
         } catch (Exception e) {
-            ErrorClass error = createError("Internal Server Error!", e.getMessage());
+            ErrorClassDTO error = createError("Internal Server Error!", e.getMessage());
             return ResponseEntity.status(500).body(error);
         }
     }
 
-    private ErrorClass createError(String message, String details) {
-        ErrorClass error = new ErrorClass();
+    private ErrorClassDTO createError(String message, String details) {
+        ErrorClassDTO error = new ErrorClassDTO();
         error.setMessage(message);
         error.setDetails(details);
         return error;
