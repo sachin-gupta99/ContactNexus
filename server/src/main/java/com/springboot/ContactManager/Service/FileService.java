@@ -4,6 +4,7 @@ import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.springboot.ContactManager.dto.ErrorClassDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,16 @@ public class FileService {
         this.amazonS3 = amazonS3;
     }
 
-    public String uploadImagetoS3(String key, MultipartFile image, String type) throws IOException {
+    public ErrorClassDTO validateImage(MultipartFile file) {
+        boolean isValid = file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg");
+        if (!isValid) {
+            return ErrorClassDTO.createError("Invalid Image Format", "Only JPEG, JPG and PNG images are allowed!");
+        }
+
+        return null;
+    }
+
+    public String uploadImageToS3(String key, MultipartFile image, String type) throws IOException {
         File modifiedFile = new File(image.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(modifiedFile);
         fos.write(image.getBytes());

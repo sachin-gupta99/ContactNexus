@@ -3,6 +3,7 @@ package com.springboot.ContactManager.Service;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,19 +15,22 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    private JwtService jwtService;
+
+    private AuthenticationManager authenticationManager;
+
     @Autowired
-    public UserServiceImpl(UserRepository theUserRepository) {
-        this.userRepository = theUserRepository;
+    public UserServiceImpl(UserRepository userRepository, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
     @Transactional
     public User saveUser(User user) {
 
-        User newUser = new User();
-        if(user.getId() != 0) {
-            newUser = userRepository.findById(user.getId()).get();
-        }
+        User newUser = userRepository.findById(user.getId()).get();
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
         newUser.setPhone(user.getPhone());
