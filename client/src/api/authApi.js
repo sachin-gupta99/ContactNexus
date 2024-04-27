@@ -9,7 +9,7 @@ export const loginRoute = (user) => {
 };
 
 export const verifyTokenRoute = () => {
-  return axiosInstance.post("/api/auth/verifyToken");
+  return axiosInstance.post("/api/user/verifyToken");
 };
 
 export const logoutRoute = (userId) => {

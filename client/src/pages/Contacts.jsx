@@ -22,11 +22,9 @@ const Contacts = () => {
   };
 
   useEffect(() => {
-    console.log(searchTerm);
   }, [searchTerm]);
 
   useEffect(() => {
-    console.log(currentPage);
   }, [currentPage]);
 
   useEffect(() => {

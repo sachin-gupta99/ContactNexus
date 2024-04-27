@@ -8,6 +8,7 @@ import Contacts from "./pages/Contacts";
 import AuthPage from "./pages/Auth";
 import { AuthLoader } from "./pages/Auth";
 import { rootLoader } from "./layouts/RootLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "settings",
@@ -35,7 +40,11 @@ const router = createBrowserRouter([
       },
       {
         path: "contacts",
-        element: <Contacts />,
+        element: (
+          <ProtectedRoute>
+            <Contacts />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

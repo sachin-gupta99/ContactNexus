@@ -117,8 +117,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/token")
-    public UserDetails loadUserByUsername(@RequestBody String username) throws UsernameNotFoundException {
-        return (UserDetails) userService.findByEmail(username);
+//    @PostMapping("/token")
+//    public UserDetails loadUserByUsername(@RequestBody String username) throws UsernameNotFoundException {
+//        return (UserDetails) userService.findByEmail(username);
+//    }
+
+    @PostMapping("/verifyToken")
+    public ResponseEntity verifyToken() {
+        System.out.println("Token is valid!");
+        return ResponseEntity.ok().body("Token is valid!");
     }
 }

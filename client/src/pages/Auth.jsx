@@ -4,10 +4,10 @@ import { useSearchParams } from "react-router-dom";
 import SignInForm from "../components/SignInForm";
 import SignUpForm from "../components/SignUpForm";
 import { router } from "../App";
-import axios from "axios";
 import { HiCheck, HiExclamation } from "react-icons/hi";
 import { Toast } from "flowbite-react";
 import { getBackgroundRoute } from "../api/generalApi";
+import { removeAuthToken } from "../util/helper";
 
 const Auth = () => {
   const [params] = useSearchParams();
@@ -32,7 +32,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    document.title = "Sign In - Contact Nexus";
+    document.title = "Authentication - Contact Nexus";
   }, []);
 
   useEffect(() => {
@@ -49,8 +49,12 @@ const Auth = () => {
 
   useEffect(() => {
     const func = async () => {
-      const background = await getBackgroundRoute();
-      setBackground(background.data.urls.full);
+      try {
+        const background = await getBackgroundRoute();
+        setBackground(background.data.urls.full);
+      } catch (error) {
+        setToast("Failed to load background. Please reload!", "error");
+      }
     };
 
     func();
