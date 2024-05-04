@@ -8,31 +8,59 @@ import TextField from "./TextField";
 import { loginRoute } from "../api/authApi";
 import { setAuthToken } from "../util/helper";
 import { router } from "../App";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { toastActions } from "../store/toast";
 
 const SignInForm = ({ setToast }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    try {
+      e.preventDefault();
 
-    const formData = new FormData();
+      dispatch(
+        toastActions.setToast({
+          message: "Signing in...",
+          type: "info",
+        })
+      );
 
-    formData.append("email", email);
-    formData.append("password", password);
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
 
-    const response = await loginRoute(formData);
+      const formData = new FormData();
 
-    if (response.status === 200 && response.data.token) {
-      setAuthToken(response.data.token);
-      router.navigate("/home");
-      setToast("Successfully logged in", "success");
-    } else {
-      setToast("Invalid credentials", "error");
-      emailRef.current.value = "";
-      passwordRef.current.value = "";
+      formData.append("email", email);
+      formData.append("password", password);
+
+      const response = await loginRoute(formData);
+      if (response.data.token) {
+        setAuthToken(response.data.token);
+        router.navigate("/home");
+        dispatch(
+          toastActions.setToast({
+            message: "Successfully logged in",
+            type: "success",
+          })
+        );
+      } else {
+        dispatch(
+          toastActions.setToast({
+            message: "Something went wrong",
+            type: "error",
+          })
+        );
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+      }
+    } catch (error) {
+      dispatch(
+        toastActions.setToast({ message: "Invalid credentials", type: "error" })
+      );
     }
   };
 
@@ -67,7 +95,7 @@ const SignInForm = ({ setToast }) => {
 
           <Button
             gradientMonochrome="failure"
-            className="font-bold w-full text-white font-bold"
+            className="font-bold w-full text-white"
             type="submit"
           >
             Sign In

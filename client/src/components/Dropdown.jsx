@@ -5,8 +5,15 @@ import { IoLogOut } from "react-icons/io5";
 import { FaAddressCard } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Avatar } from "flowbite-react";
+import { removeAuthToken } from "../util/helper";
+import { router } from "../App";
 
 const Dropdown = ({ isOpen, toggleDropdown }) => {
+  const onLogout = () => {
+    removeAuthToken();
+    router.navigate("/auth");
+  };
+
   return (
     <div className="relative z-50">
       <Avatar
@@ -20,7 +27,9 @@ const Dropdown = ({ isOpen, toggleDropdown }) => {
       {isOpen && (
         <div className="absolute right-2 mt-1 bg-white border border-gray-200 rounded-md shadow-lg w-max-content p-3">
           <div className="p-3 border-b-2 border-red-200">
-            <span className="block text-sm text-gray-900 font-bold">Sachin Gupta</span>
+            <span className="block text-sm text-gray-900 font-bold">
+              Sachin Gupta
+            </span>
             <span className="block truncate text-sm text-gray-500 font-medium">
               sachin@gupta.com
             </span>
@@ -43,7 +52,10 @@ const Dropdown = ({ isOpen, toggleDropdown }) => {
               Settings
             </li>
             <hr />
-            <li className="px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2 relative dropdown-items">
+            <li
+              className="px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2 relative dropdown-items"
+              onClick={onLogout}
+            >
               <IoLogOut />
               Log Out
             </li>

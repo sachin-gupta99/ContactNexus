@@ -7,14 +7,22 @@ import { IoHome } from "react-icons/io5";
 import { IoMdContacts } from "react-icons/io";
 import Dropdown from "./Dropdown";
 import { Button } from "flowbite-react";
+import { getAuthToken } from "../util/helper";
 
 const Navbar = () => {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const token = getAuthToken();
+    console.log(token);
+    if (token) setIsAuthenticated(true);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,11 +59,15 @@ const Navbar = () => {
       </div>
 
       <div className="flex justify-center gap-8 items-center w-1/8">
-        <Link to="/auth?mode=signin" className="text-white font-bold">
-          <Button gradientMonochrome="failure" className="font-bold">
-            Login
-          </Button>
-        </Link>
+        {console.log(isAuthenticated)}
+        {!isAuthenticated && (
+          <Link to="/auth?mode=signin" className="text-white font-bold">
+            <Button gradientMonochrome="failure" className="font-bold">
+              Login
+            </Button>
+          </Link>
+        )}
+        {/* {!isAuthenticated && <p>Hello</p>} */}
         <div className="w-1/9 relative" ref={dropdownRef}>
           <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
         </div>

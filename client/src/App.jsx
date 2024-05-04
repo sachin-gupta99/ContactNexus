@@ -9,6 +9,7 @@ import AuthPage from "./pages/Auth";
 import { AuthLoader } from "./pages/Auth";
 import { rootLoader } from "./layouts/RootLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ToastContainer from "./components/ToastContainer";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,7 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   );
 };
