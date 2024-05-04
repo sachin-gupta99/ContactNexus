@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+
 import SignInForm from "../components/SignInForm";
 import SignUpForm from "../components/SignUpForm";
 import { router } from "../App";
@@ -11,36 +12,12 @@ const Auth = () => {
   const mode = params.get("mode");
 
   const [background, setBackground] = useState("");
-  // const background = "https://source.unsplash.com/1600x900/?nature,water";
 
   const [error, setError] = useState(false);
-
-  // const setToast = (message, type) => {
-  //   setError(true);
-  //   setToastMessage(message);
-
-  //   if (type === "error") {
-  //     setToastType("error");
-  //   } else if (type === "success") {
-  //     setToastType("success");
-  //   }
-  // };
 
   useEffect(() => {
     document.title = "Authentication - Contact Nexus";
   }, []);
-
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => {
-        setError(false);
-      }, 2000);
-    }
-
-    return () => {
-      clearTimeout();
-    };
-  }, [error]);
 
   useEffect(() => {
     const func = async () => {
