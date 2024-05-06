@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomePageLogo from "../assets/HomePagePic.jpg";
 import MeetingDifferentPeople from "../assets/MeetingDifferentPeople.jpg";
 import SaveContacts from "../assets/SaveContacts.jpg";
@@ -8,6 +8,10 @@ import { Button } from "flowbite-react";
 import { Card } from "flowbite-react";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Contact Nexus - Home";
+  }, []);
+
   return (
     <div className="flex flex-col gap-12">
       <div className="flex justify-around p-4 m-4 bg-gradient-to-r from-red-300 to-red-500 rounded-lg shadow-lg">
@@ -77,7 +81,6 @@ const StandardProcedure = () => {
         </p>
       </div>
 
-      
       <div className="flex justify-center gap-8 w-4/5 mx-auto">
         <StandardProcedureCards
           feature="Meet with different people"

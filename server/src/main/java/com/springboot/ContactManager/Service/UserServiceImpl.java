@@ -3,7 +3,6 @@ package com.springboot.ContactManager.Service;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +14,9 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    private JwtService jwtService;
-
-    private AuthenticationManager authenticationManager;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -74,12 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public User findByPhone(String phone) {
+    public User findUserByPhone(String phone) {
         return userRepository.findByPhone(phone);
     }
 

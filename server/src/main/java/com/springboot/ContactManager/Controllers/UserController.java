@@ -1,5 +1,6 @@
 package com.springboot.ContactManager.Controllers;
 
+import com.amazonaws.HttpMethod;
 import com.springboot.ContactManager.Entity.Contact;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Service.FileService;
@@ -7,9 +8,6 @@ import com.springboot.ContactManager.Service.UserService;
 import com.springboot.ContactManager.dto.ErrorClassDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,17 +42,38 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getUserById(@PathVariable("id") Integer id) {
+    // @GetMapping("/{id}")
+    // public ResponseEntity getUserById(@PathVariable("id") Integer id) {
+
+    //     try {
+    //         User user = userService.findUserById(id);
+
+    //         if (user == null) {
+
+    //             ErrorClassDTO error = ErrorClassDTO.createError("User not found!", "User with id = " + id + " not found!");
+    //             return ResponseEntity.status(404).body(error);
+    //         }
+
+    //         return ResponseEntity.ok().body(user);
+    //     } catch (Exception e) {
+    //         ErrorClassDTO error = ErrorClassDTO.createError("Internal Server Error!", e.getMessage());
+    //         return ResponseEntity.status(500).body(error);
+    //     }
+    // }
+
+    @GetMapping("/{emailId}")
+    public ResponseEntity getUserByEmail(@PathVariable("emailId") String emailId) {
 
         try {
-            User user = userService.findUserById(id);
+            User user = userService.findUserByEmail(emailId);
 
             if (user == null) {
-
-                ErrorClassDTO error = ErrorClassDTO.createError("User not found!", "User with id = " + id + " not found!");
+                ErrorClassDTO error = ErrorClassDTO.createError("User not found!", "User with email = " + emailId + " not found!");
                 return ResponseEntity.status(404).body(error);
             }
+
+            user.setPassword(null);
+            user.setImage(fileService.generateUrl(user.getImage(), HttpMethod.GET));
 
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
@@ -117,14 +136,8 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/token")
-//    public UserDetails loadUserByUsername(@RequestBody String username) throws UsernameNotFoundException {
-//        return (UserDetails) userService.findByEmail(username);
-//    }
-
     @PostMapping("/verifyToken")
     public ResponseEntity verifyToken() {
-        System.out.println("Token is valid!");
         return ResponseEntity.ok().body("Token is valid!");
     }
 }

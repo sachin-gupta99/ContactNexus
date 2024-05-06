@@ -43,7 +43,7 @@ public class FileService {
         FileOutputStream fos = new FileOutputStream(modifiedFile);
         fos.write(image.getBytes());
 
-        if (type == "profile")
+        if (type.equals("profile"))
             key = "user-folder/" + key + "/profilePicture." + image.getContentType().split("/")[1];
         else
             key += "/contact-folder/" + image.getOriginalFilename();
@@ -51,6 +51,7 @@ public class FileService {
         amazonS3.putObject(new PutObjectRequest(bucketName, key, modifiedFile)
                 .withMetadata(new ObjectMetadata()));
 
+        fos.close();
         modifiedFile.delete();
         return key;
     }

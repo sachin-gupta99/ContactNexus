@@ -1,5 +1,6 @@
 package com.springboot.ContactManager.Controllers;
 
+import com.amazonaws.HttpMethod;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Service.AuthenticationService;
 import com.springboot.ContactManager.Service.FileService;
@@ -32,7 +33,8 @@ public class AuthController {
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity addUser(@ModelAttribute SignUpUserDTO userDTO, @RequestParam("image") MultipartFile image) throws IOException {
+    public ResponseEntity addUser(@ModelAttribute SignUpUserDTO userDTO, @RequestParam("image") MultipartFile image)
+            throws IOException {
 
         try {
             ErrorClassDTO isUserValid = authenticationService.validateUser(userDTO.toUser(null));
@@ -60,12 +62,15 @@ public class AuthController {
         try {
             User authenticatedUser = authenticationService.authenticate(userDTO);
 
+            authenticatedUser.setPassword(null);
+            authenticatedUser.setImage(fileService.generateUrl(authenticatedUser.getImage(), HttpMethod.GET));
+
             String token = jwtService.generateToken(authenticatedUser);
 
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("token", token);
             responseBody.put("Expiration", jwtService.getExpirationDateFromToken(token));
-//            responseBody.put("user", user);
+            responseBody.put("user", authenticatedUser);
             return ResponseEntity.ok().body(responseBody);
 
         } catch (Exception e) {

@@ -41,7 +41,7 @@ const ImagePicker = forwardRef(({ label, name }, ref) => {
           className="hidden"
           type="file"
           id={name}
-          accept="image/png image/jpeg image/jpg"
+          accept="image/png, image/jpeg, image/jpg"
           name={name}
           ref={ref}
           onChange={handleImageChange}

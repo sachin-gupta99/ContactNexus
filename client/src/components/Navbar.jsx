@@ -20,7 +20,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = getAuthToken();
-    console.log(token);
     if (token) setIsAuthenticated(true);
   }, []);
 
@@ -59,7 +58,6 @@ const Navbar = () => {
       </div>
 
       <div className="flex justify-center gap-8 items-center w-1/8">
-        {console.log(isAuthenticated)}
         {!isAuthenticated && (
           <Link to="/auth?mode=signin" className="text-white font-bold">
             <Button gradientMonochrome="failure" className="font-bold">
@@ -67,10 +65,11 @@ const Navbar = () => {
             </Button>
           </Link>
         )}
-        {/* {!isAuthenticated && <p>Hello</p>} */}
-        <div className="w-1/9 relative" ref={dropdownRef}>
-          <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
-        </div>
+        {isAuthenticated && (
+          <div className="w-1/9 relative" ref={dropdownRef}>
+            <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} />
+          </div>
+        )}
       </div>
     </div>
   );

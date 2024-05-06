@@ -4,24 +4,27 @@ import { Card } from "flowbite-react";
 import { Avatar } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { Button } from "flowbite-react";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const user = useSelector((state) => state.user.user);
+
   const likesInterests = [
-    { label: "Likes", value: "Coding, Reading, Travelling" },
-    { label: "Movie", value: "The Shawshank Redemption" },
-    { label: "Interests", value: "Web Development, Machine Learning, AI" },
+    { label: "Likes", value: user.likes },
+    { label: "Movie", value: user.movie },
+    { label: "Interests", value: user.interests },
   ];
 
   const contactInformation = [
-    { label: "Email", value: "sachin@gupta.com" },
-    { label: "Phone", value: "+91 1234567890" },
-    { label: "Address", value: "123, Street Name, City, Country" },
+    { label: "Email", value: user.email },
+    { label: "Phone", value: "+91-" + user.phone },
+    { label: "Address", value: user.address },
   ];
 
   const socialMedia = [
-    { label: "Github", value: "sachin-gupta99" },
-    { label: "Daily.Dev", value: "sachin.gupta" },
-    { label: "LinkedIn", value: "sachin.gupta" },
+    { label: "Github", value: user.github },
+    { label: "LinkedIn", value: user.linkedin },
+    { label: "Instragram", value: user.instagram },
   ];
 
   return (
@@ -31,13 +34,13 @@ const Profile = () => {
         <Card
           className="w-1/6 bg-gray-900"
           imgAlt="Meaningful alt text for an image that is not purely decorative"
-          imgSrc={ProfilePicture}
+          imgSrc={user.image}
         >
           <h5 className="text-3xl font-bold tracking-tight text-red-500 dark:text-white">
-            Sachin Gupta
+            {user.name}
           </h5>
           <p className="text-md text-white font-bold dark:text-gray-400">
-            Software Engineer
+            {user.work}
           </p>
         </Card>
 
@@ -45,10 +48,10 @@ const Profile = () => {
         <div className="border border-red-500 rounded-lg w-2/3 shadow-xl flex flex-col gap-2">
           <div className="p-4 text-center">
             <h1 className="text-3xl font-bold text-red-500">
-              Some random text
+              {user.bio_heading || "Bio Heading"}
             </h1>
             <p className="text-lg text-gray-500">
-              A brief description of the random text written above
+              {user.bio_desc || "Bio Description"}
             </p>
           </div>
 
@@ -129,8 +132,8 @@ export default Profile;
 const DetailsCard = ({ heading, details }) => {
   return (
     <>
-      <div class="max-w-sm p-6 bg-white rounded-lg w-1/3 border shadow-md">
-        <h5 class="text-lg font-bold mb-2 border-b-2">{heading}</h5>
+      <div className="max-w-sm p-6 bg-white rounded-lg w-1/3 border shadow-md">
+        <h5 className="text-lg font-bold mb-2 border-b-2">{heading}</h5>
         <div className="flex flex-col gap-4">
           <DetailsCardValue label={details[0].label} value={details[0].value} />
           <DetailsCardValue label={details[1].label} value={details[1].value} />

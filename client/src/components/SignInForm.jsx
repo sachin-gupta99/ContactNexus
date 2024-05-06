@@ -9,10 +9,10 @@ import { loginRoute } from "../api/authApi";
 import { setAuthToken } from "../util/helper";
 import { router } from "../App";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { toastActions } from "../store/toast";
+import { userActions } from "../store/user";
 
-const SignInForm = ({ setToast }) => {
+const SignInForm = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -47,6 +47,7 @@ const SignInForm = ({ setToast }) => {
             type: "success",
           })
         );
+        dispatch(userActions.setUser(response.data.user));
       } else {
         dispatch(
           toastActions.setToast({

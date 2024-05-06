@@ -8,6 +8,14 @@ export const loginRoute = (user) => {
   return axiosInstance.post("/api/auth/login", user);
 };
 
+export const signUpRoute = (data) => {
+  return axiosInstance.post("/api/auth/addUser", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 export const verifyTokenRoute = () => {
   return axiosInstance.post("/api/user/verifyToken");
 };

@@ -1,12 +1,6 @@
 package com.springboot.ContactManager.Service;
 
 import com.springboot.ContactManager.Entity.User;
-import com.springboot.ContactManager.dto.ErrorClassDTO;
-import com.springboot.ContactManager.dto.SignInUserDTO;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -17,9 +11,9 @@ public interface UserService {
 
     public User findUserById(int id);
 
-    public User findByEmail(String email);
+    public User findUserByEmail(String email);
 
-    public User findByPhone(String phone);
+    public User findUserByPhone(String phone);
 
     public void deleteUserById(int id);
 }

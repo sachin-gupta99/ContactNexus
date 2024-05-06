@@ -21,7 +21,10 @@ import { MdInterests } from "react-icons/md";
 import ImagePicker from "./ImagePicker";
 import { BsPersonBadgeFill } from "react-icons/bs";
 import { TbFileDescription } from "react-icons/tb";
-import { newUserRoute } from "../api/userApi";
+import { signUpRoute } from "../api/authApi";
+import { useDispatch } from "react-redux";
+import { toastActions } from "../store/toast";
+import { router } from "../App";
 
 const SignUpForm = ({ setToast }) => {
   const email_ref = useRef();
@@ -44,6 +47,8 @@ const SignUpForm = ({ setToast }) => {
   const image_ref = useRef();
   const bio_heading_ref = useRef();
   const bio_desc_ref = useRef();
+
+  const dispatch = useDispatch();
 
   const validate_form1 = () => {
     const email = email_ref.current?.value;
@@ -96,11 +101,23 @@ const SignUpForm = ({ setToast }) => {
     }
   };
 
+  const validate_form4 = () => {
+    const image = image_ref.current?.files[0];
+    const bio_heading = bio_heading_ref.current?.value;
+    const bio_desc = bio_desc_ref.current?.value;
+
+    if (!image || !bio_heading || !bio_desc) {
+      return "Please fill all the fields.";
+    } else {
+      return "";
+    }
+  };
+
   const Form1Next = () => {
     const error = validate_form1();
 
     if (error) {
-      setToast(error, "error");
+      dispatch(toastActions.setToast({ message: error, type: "error" }));
       return;
     }
 
@@ -131,7 +148,7 @@ const SignUpForm = ({ setToast }) => {
     const error = validate_form2();
 
     if (error) {
-      setToast(error, "error");
+      dispatch(toastActions.setToast({ message: error, type: "error" }));
       return;
     }
 
@@ -162,7 +179,7 @@ const SignUpForm = ({ setToast }) => {
     const error = validate_form3();
 
     if (error) {
-      setToast(error, "error");
+      dispatch(toastActions.setToast({ message: error, type: "error" }));
       return;
     }
 
@@ -188,65 +205,102 @@ const SignUpForm = ({ setToast }) => {
     heading.innerHTML = "Social Media, Likes & Interests <hr />";
   };
 
-  const handleSubmmit = async (e) => {
-    e.preventDefault();
-    const email = email_ref.current?.value;
-    const name = name_ref.current?.value;
-    const password = password_ref.current?.value;
-    const work = work_ref.current?.value;
-    const phone = phone_ref.current?.value;
-
-    const street = street_ref.current?.value;
-    const area = area_ref.current?.value;
-    const city = city_ref.current?.value;
-    const state = state_ref.current?.value;
-    const pincode = pincode_ref.current?.value;
-
-    const github = github_ref.current?.value;
-    const linkedin = linkedin_ref.current?.value;
-    const instagram = instagram_ref.current?.value;
-    const likes = likes_ref.current?.value;
-    const movie = movie_ref.current?.value;
-    const interests = interests_ref.current?.value;
-
-    const image = image_ref.current?.files[0];
-    const bio_heading = bio_heading_ref.current?.value;
-    const bio_desc = bio_desc_ref.current?.value;
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("work", work);
-    formData.append("phone", phone);
-
-    formData.append("street", street);
-    formData.append("area", area);
-    formData.append("city", city);
-    formData.append("state", state);
-    formData.append("pincode", pincode);
-
-    formData.append("github", github);
-    formData.append("linkedin", linkedin);
-    formData.append("instagram", instagram);
-    formData.append("likes", likes);
-    formData.append("movie", movie);
-    formData.append("interests", interests);
-
-    formData.append("image", image);
-    formData.append("bio_heading", bio_heading);
-    formData.append("bio_desc", bio_desc);
-
-    const result = await newUserRoute(formData);
-
-    console.log("Result: ", result);
-
-    if (result.error) {
-      setToast(result.error, "error");
+  const Form4Next = () => {
+    const error = validate_form4();
+    if (error) {
+      dispatch(toastActions.setToast({ message: error, type: "error" }));
       return;
     }
+  };
 
-    setToast("User created successfully.", "success");
+  const handleSubmmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      Form4Next();
+
+      dispatch(
+        toastActions.setToast({
+          message: "Registering User...",
+          type: "info",
+        })
+      );
+
+      const email = email_ref.current?.value;
+      const name = name_ref.current?.value;
+      const password = password_ref.current?.value;
+      const work = work_ref.current?.value;
+      const phone = phone_ref.current?.value;
+
+      const street = street_ref.current?.value;
+      const area = area_ref.current?.value;
+      const city = city_ref.current?.value;
+      const state = state_ref.current?.value;
+      const pincode = pincode_ref.current?.value;
+
+      const github = github_ref.current?.value;
+      const linkedin = linkedin_ref.current?.value;
+      const instagram = instagram_ref.current?.value;
+      const likes = likes_ref.current?.value;
+      const movie = movie_ref.current?.value;
+      const interests = interests_ref.current?.value;
+
+      const image = image_ref.current?.files[0];
+      const bio_heading = bio_heading_ref.current?.value;
+      const bio_desc = bio_desc_ref.current?.value;
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("work", work);
+      formData.append("phone", phone);
+
+      formData.append("street", street);
+      formData.append("area", area);
+      formData.append("city", city);
+      formData.append("state", state);
+      formData.append("pincode", pincode);
+
+      formData.append("github", github);
+      formData.append("linkedin", linkedin);
+      formData.append("instagram", instagram);
+      formData.append("likes", likes);
+      formData.append("movie", movie);
+      formData.append("interests", interests);
+
+      formData.append("image", image);
+      formData.append("bio_heading", bio_heading);
+      formData.append("bio_desc", bio_desc);
+
+      const result = await signUpRoute(formData);
+
+      if (result.error) {
+        dispatch(
+          toastActions.setToast({
+            message: result.error,
+            type: "error",
+          })
+        );
+        return;
+      }
+
+      dispatch(
+        toastActions.setToast({
+          message: "User Successfully Registered. Please Sign In to continue.",
+          type: "success",
+        })
+      );
+
+      router.navigate("/auth?mode=signin");
+    } catch (error) {
+      dispatch(
+        toastActions.setToast({
+          message: "Something went wrong",
+          type: "error",
+        })
+      );
+    }
   };
 
   return (

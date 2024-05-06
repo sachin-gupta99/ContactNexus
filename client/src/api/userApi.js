@@ -1,13 +1,5 @@
 import axiosInstance from "./axiosInstance";
 
-export const getUserRoute = () => {
-  return axiosInstance.get("/api/user");
-};
-
-export const newUserRoute = (data) => {
-  return axiosInstance.post("/api/user/add", data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const getUserByEmailRoute = ({email}) => {
+  return axiosInstance.get(`/api/user/${email}`);
 };

@@ -13,8 +13,6 @@ const Auth = () => {
 
   const [background, setBackground] = useState("");
 
-  const [error, setError] = useState(false);
-
   useEffect(() => {
     document.title = "Authentication - Contact Nexus";
   }, []);
