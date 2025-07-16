@@ -1,6 +1,6 @@
 package com.springboot.ContactManager.config;
 
-import com.springboot.ContactManager.Service.JwtService;
+import com.springboot.ContactManager.Service.Impl.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

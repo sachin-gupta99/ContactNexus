@@ -2,6 +2,7 @@ package com.springboot.ContactManager.config;
 
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,20 +14,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
+@AllArgsConstructor
 public class ApplicationConfig {
-    private final UserRepository userRepository;
 
-    public ApplicationConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     @Bean
     UserDetailsService userDetailsService() {
         return username -> {
             User user = userRepository.findByEmail(username);
-            if (user == null) {
+            if (user == null)
                 throw new UsernameNotFoundException("User not found with email: " + username);
-            }
+
             return user;
         };
     }
