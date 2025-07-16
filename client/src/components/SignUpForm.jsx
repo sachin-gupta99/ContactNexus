@@ -217,7 +217,12 @@ const SignUpForm = ({ setToast }) => {
     try {
       e.preventDefault();
 
-      Form4Next();
+      // Validate the last form before submitting
+      const error = validate_form4();
+      if (error) {
+        dispatch(toastActions.setToast({ message: error, type: "error" }));
+        return;
+      }
 
       dispatch(
         toastActions.setToast({
@@ -246,10 +251,11 @@ const SignUpForm = ({ setToast }) => {
       const interests = interests_ref.current?.value;
 
       const image = image_ref.current?.files[0];
-      const bio_heading = bio_heading_ref.current?.value;
-      const bio_desc = bio_desc_ref.current?.value;
+      const bioHeading = bio_heading_ref.current?.value;
+      const bioDescription = bio_desc_ref.current?.value;
 
       const formData = new FormData();
+
       formData.append("name", name);
       formData.append("email", email);
       formData.append("password", password);
@@ -269,9 +275,11 @@ const SignUpForm = ({ setToast }) => {
       formData.append("movie", movie);
       formData.append("interests", interests);
 
-      formData.append("image", image);
-      formData.append("bio_heading", bio_heading);
-      formData.append("bio_desc", bio_desc);
+      formData.append("image", "image");
+      formData.append("bioHeading", bioHeading);
+      formData.append("bioDescription", bioDescription);
+
+      formData.append("imageFile", image);
 
       const result = await signUpRoute(formData);
 

@@ -38,8 +38,10 @@ const SignInForm = () => {
       formData.append("password", password);
 
       const response = await loginRoute(formData);
-      if (response.data.token) {
-        setAuthToken(response.data.token);
+    
+      if (response?.data?.data?.token) {
+        setAuthToken(response?.data?.data?.token);
+
         router.navigate("/home");
         dispatch(
           toastActions.setToast({
@@ -47,7 +49,7 @@ const SignInForm = () => {
             type: "success",
           })
         );
-        dispatch(userActions.setUser(response.data.user));
+        dispatch(userActions.setUser(response?.data?.data));
       } else {
         dispatch(
           toastActions.setToast({

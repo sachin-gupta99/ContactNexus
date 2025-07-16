@@ -9,7 +9,8 @@ export const loginRoute = (user) => {
 };
 
 export const signUpRoute = (data) => {
-  return axiosInstance.post("/api/auth/addUser", data, {
+
+  return axiosInstance.post(`/api/auth/addUser`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
