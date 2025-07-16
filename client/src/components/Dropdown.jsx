@@ -15,7 +15,7 @@ import { userActions } from "../store/user";
 
 const Dropdown = ({ isOpen, toggleDropdown }) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user?.user);
 
   const onLogout = () => {
     removeAuthToken();
@@ -29,9 +29,8 @@ const Dropdown = ({ isOpen, toggleDropdown }) => {
 
       const response = await getUserByEmailRoute({ email: decodedToken.sub });
 
-      if (response.data) {
-        dispatch(userActions.setUser(response.data));
-      }
+      if (response.data)
+        dispatch(userActions.setUser(response.data?.data));
     };
 
     getUser();
@@ -40,7 +39,8 @@ const Dropdown = ({ isOpen, toggleDropdown }) => {
   return (
     <div className="relative z-50">
       <Avatar
-        img={user?.image || "https://via.placeholder.com/150"}
+        placeholderInitials="RR"
+        img={user?.image}
         alt="User Avatar"
         rounded
         status="online"

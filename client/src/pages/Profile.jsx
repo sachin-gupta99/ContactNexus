@@ -7,24 +7,24 @@ import { Button } from "flowbite-react";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user?.user);
 
   const likesInterests = [
-    { label: "Likes", value: user.likes },
-    { label: "Movie", value: user.movie },
-    { label: "Interests", value: user.interests },
+    { label: "Likes", value: user?.likes },
+    { label: "Movie", value: user?.movie },
+    { label: "Interests", value: user?.interests },
   ];
 
   const contactInformation = [
-    { label: "Email", value: user.email },
-    { label: "Phone", value: "+91-" + user.phone },
-    { label: "Address", value: user.address },
+    { label: "Email", value: user?.email },
+    { label: "Phone", value: "+91-" + user?.phone },
+    { label: "Address", value: user?.street + ", " + user?.area + ", " + user?.city + ", " + user?.state},
   ];
 
   const socialMedia = [
-    { label: "Github", value: user.github },
-    { label: "LinkedIn", value: user.linkedin },
-    { label: "Instragram", value: user.instagram },
+    { label: "Github", value: user?.github },
+    { label: "LinkedIn", value: user?.linkedin },
+    { label: "Instragram", value: user?.instagram },
   ];
 
   return (
@@ -34,13 +34,13 @@ const Profile = () => {
         <Card
           className="w-1/6 bg-gray-900"
           imgAlt="Meaningful alt text for an image that is not purely decorative"
-          imgSrc={user.image}
+          imgSrc={user?.image}
         >
           <h5 className="text-3xl font-bold tracking-tight text-red-500 dark:text-white">
-            {user.name}
+            {user?.name}
           </h5>
           <p className="text-md text-white font-bold dark:text-gray-400">
-            {user.work}
+            {user?.work}
           </p>
         </Card>
 
@@ -48,10 +48,10 @@ const Profile = () => {
         <div className="border border-red-500 rounded-lg w-2/3 shadow-xl flex flex-col gap-2">
           <div className="p-4 text-center">
             <h1 className="text-3xl font-bold text-red-500">
-              {user.bio_heading || "Bio Heading"}
+              {user?.bioHeading || "Bio Heading"}
             </h1>
             <p className="text-lg text-gray-500">
-              {user.bio_desc || "Bio Description"}
+              {user?.bioDescription || "Bio Description"}
             </p>
           </div>
 
@@ -147,8 +147,8 @@ const DetailsCard = ({ heading, details }) => {
 const DetailsCardValue = ({ label, value }) => {
   return (
     <p className="text-md flex gap-1 items-center">
-      <span className="text-red-500 font-bold">{label}:</span>
-      <span className="text-gray-700 text-sm">{value}</span>
+      <span className="text-red-500 font-bold self-start">{label}:</span>
+      <span className="text-gray-700 text-sm p-[0.1rem]">{value}</span>
     </p>
   );
 };
