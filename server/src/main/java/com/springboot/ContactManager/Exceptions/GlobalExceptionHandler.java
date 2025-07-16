@@ -1,6 +1,7 @@
 package com.springboot.ContactManager.Exceptions;
 
-import com.springboot.ContactManager.dto.ErrorClassDTO;
+import com.springboot.ContactManager.dto.ErrorDTO;
+import com.springboot.ContactManager.dto.GlobalResponseDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.ResponseEntity;
@@ -13,37 +14,37 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleSecurityException(Exception exception) {
-        ErrorClassDTO error = null;
+    public ResponseEntity<?> handleSecurityException(Exception exception) {
+        ErrorDTO error = null;
 
-        if (exception instanceof BadCredentialsException) {
-            error = ErrorClassDTO.createError("Bad Credentials", "The username or password is incorrect");
-            return ResponseEntity.status(401).body(error);
+        switch (exception) {
+            case BadCredentialsException badCredentialsException -> {
+                error = ErrorDTO.of("Bad Credentials", "The username or password is incorrect");
+                return ResponseEntity.status(401).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 401));
+            }
+            case AccountStatusException accountStatusException -> {
+                error = ErrorDTO.of("Account Status Exception", "The account is locked or disabled");
+                return ResponseEntity.status(401).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 401));
+            }
+            case AccessDeniedException accessDeniedException -> {
+                error = ErrorDTO.of("Access Denied", "You do not have permission to access this resource");
+                return ResponseEntity.status(403).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 403));
+            }
+            case SignatureException signatureException -> {
+                error = ErrorDTO.of("Signature Exception", "The JWT token signature is invalid");
+                return ResponseEntity.status(401).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 401));
+            }
+            case ExpiredJwtException expiredJwtException -> {
+                error = ErrorDTO.of("Expired JWT", "The JWT token has expired");
+                return ResponseEntity.status(401).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 401));
+            }
+            case IllegalArgumentException illegalArgumentException -> {
+                error = ErrorDTO.of("Bad Request", "The request is invalid");
+                return ResponseEntity.status(400).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 400));
+            }
+            case null, default -> error = ErrorDTO.of("Internal Server Error", exception.getMessage());
         }
 
-        else if (exception instanceof AccountStatusException) {
-            error = ErrorClassDTO.createError("Account Status Exception", "The account is locked or disabled");
-            return ResponseEntity.status(401).body(error);
-        }
-
-        else if (exception instanceof AccessDeniedException) {
-            error = ErrorClassDTO.createError("Access Denied", "You do not have permission to access this resource");
-            return ResponseEntity.status(403).body(error);
-        }
-
-        else if (exception instanceof SignatureException) {
-            error = ErrorClassDTO.createError("Signature Exception", "The JWT token signature is invalid");
-            return ResponseEntity.status(401).body(error);
-        }
-
-        else if (exception instanceof ExpiredJwtException) {
-            error = ErrorClassDTO.createError("Expired JWT", "The JWT token has expired");
-            return ResponseEntity.status(401).body(error);
-        }
-
-        else
-            error = ErrorClassDTO.createError("Internal Server Error", "An internal server error occurred");
-
-        return ResponseEntity.status(401).body(error);
+        return ResponseEntity.status(500).body(GlobalResponseDTO.failure(error.getMessage() + " : " + error.getDescription(), 500));
     }
 }

@@ -1,5 +1,6 @@
 package com.springboot.ContactManager.Service;
 
+import com.springboot.ContactManager.Entity.Contact;
 import com.springboot.ContactManager.Entity.User;
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface UserService {
     public User findUserByPhone(String phone);
 
     public void deleteUserById(int id);
+
+    public Contact addContact(Contact contact, int id);
 }
