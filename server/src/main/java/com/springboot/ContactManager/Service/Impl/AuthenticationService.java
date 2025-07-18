@@ -1,6 +1,5 @@
 package com.springboot.ContactManager.Service.Impl;
 
-import com.amazonaws.HttpMethod;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Repository.UserRepository;
 import com.springboot.ContactManager.dto.ErrorDTO;
@@ -89,7 +88,7 @@ public class AuthenticationService {
         }
 
         authenticatedUser.setPassword(null);
-        authenticatedUser.setImage(fileService.generateUrl(authenticatedUser.getImage(), HttpMethod.GET));
+        authenticatedUser.setImage(fileService.generateUrl(authenticatedUser.getImage()));
 
         String token = jwtService.generateToken(authenticatedUser);
 

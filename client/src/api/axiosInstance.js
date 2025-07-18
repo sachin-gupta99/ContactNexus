@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "../util/helper";
 
-export const host = "http://localhost:8081";
+export const host = "http://localhost:8080";
 
 const axiosInstance = axios.create({
   baseURL: host,
