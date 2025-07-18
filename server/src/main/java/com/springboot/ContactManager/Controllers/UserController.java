@@ -1,6 +1,5 @@
 package com.springboot.ContactManager.Controllers;
 
-import com.amazonaws.HttpMethod;
 import com.springboot.ContactManager.Entity.Contact;
 import com.springboot.ContactManager.Entity.User;
 import com.springboot.ContactManager.Service.Impl.FileService;
@@ -33,7 +32,7 @@ public class UserController {
         User user = userService.findUserByEmail(emailId);
 
         user.setPassword(null);
-        user.setImage(fileService.generateUrl(user.getImage(), HttpMethod.GET));
+        user.setImage(fileService.generateUrl(user.getImage()));
 
         return ResponseEntity.ok().body(GlobalResponseDTO.success(user, "User fetched successfully!"));
     }

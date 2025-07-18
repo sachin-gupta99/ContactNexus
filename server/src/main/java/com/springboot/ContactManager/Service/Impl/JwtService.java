@@ -17,11 +17,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
+
+    private final ParameterStoreService parameterStoreService;
+
     @Value("${jwt.secret}")
-    private String secretKey;
+    private String secretKeyPath;
 
     @Value("${jwt.token.validity}")
     private long jwtExpiration;
+
+    public JwtService(ParameterStoreService parameterStoreService) {
+        this.parameterStoreService = parameterStoreService;
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -86,7 +93,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(parameterStoreService.getParameterValue(secretKeyPath));
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ContactManager
+  main:
+    banner-mode: off
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+# Remove console logging
+logging:
+  level:
+    root: WARN
+
+# AWS SSM configuration
+aws:
+  ssm:
+    region: ap-south-1
+  iam-user:
+    accessKey: /ContactNexus/accessKey
+    secretKey: /ContactNexus/secretKey
+  s3:
+    bucketName: /ContactNexus/s3/bucketName
+    region: /ContactNexus/s3/region
+
+jwt:
+  secret: /ContactNexus/jwt/secret
+  token:
+    validity: 3600000
+
+unsplash:
+  accessKey: /ContactNexus/unsplash/accessKey
